@@ -1,6 +1,6 @@
 import automato
 
-Aut = Automato()
+#Aut = Automato()
 
 palavra = "abba"
 
