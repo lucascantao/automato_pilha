@@ -40,5 +40,6 @@ class Automato:
         print(self.campos)
 
 
-
+        #def processa(self, estado, simbolo):
+            #TODO est_atual -> est_destino
 
