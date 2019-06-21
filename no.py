@@ -2,12 +2,10 @@
 
 class No:
 
-    estado_inicial = ""
     estado_destino = []
     simbolos = []
 
-    def __init__(self, ei, dest, simb):
-        self.estado_inicial = ei
+    def __init__(self, dest, simb):
         self.estados_destino = dest[::]
         self.simbolos = simb[::]
 
