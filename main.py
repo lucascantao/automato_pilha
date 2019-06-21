@@ -1,4 +1,14 @@
 from automato import *
+import os
+
+path = os.getcwd()              #PEGANDO CAMINHO ATUAL
+directory = os.listdir(path)    #LISTANDO TODOS OS ARQUIVOS
+
+arq = ""
+
+for fi in directory:            #DEFININDO ARQUIVO .TXT A SER LIDO
+    if fi.endswith('.txt'):
+        arq = fi
 
 simbolos = []
 estados = []
@@ -9,7 +19,7 @@ estado_atual: ""
 regras_de_prod = []
 
 
-file = open("automato_teste.txt", 'r', encoding='utf-8') #
+file = open(arq, 'r', encoding='utf-8')
 
 a = file.read()
 line = a.splitlines()
