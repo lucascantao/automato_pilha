@@ -2,22 +2,43 @@
 
 class Automato:
 
-    Alfabeto = [] #simbolos
-    Q = [] #estados
-    D = [] #regras de produção
-    S: str #estado inicial
-    F = [] #estados finais
-    V = [] #Simbolos da Pilha
+    simbolos = []
+    estados = []
+    estado_incial = []
+    estados_finais = []
+    estado_atual: str
+    pilha = []
+
+    campos = []
+
+    def __init__(self, gramatica: str):
+
+        gramatica = gramatica.replace('(', '')
+        gramatica = gramatica.replace(')', '')
+        gramatica = gramatica.replace('{', '|')
+        gramatica = gramatica.replace('}', '|')
+        self.campos = gramatica.split('|')
+
+        for i in self.campos:
+            if i == '' or i == ', ':
+                self.campos.remove(i)
+
+        self.simbolos = self.campos[0].split(', ')
+        self.estados = self.campos[1].split(', ')
+        self.estados_finais = self.campos[3].split(', ')
+        self.pilha = self.campos[4].split(', ')
+
+        self.estado_incial = self.campos[2].split(', ')   #RESOLVENDO PROBLEMA DO ESTADO INCIAL JUNTO COM "D"
+        self.estado_incial.remove('D')
+        for i in self.estado_incial:
+            if i == '':
+                self.estado_incial.remove(i)
 
 
-    def __init__(self, Alfa, Q, D, S, F, V):
-        self.Alfabeto = Alfa[::]
-        self.Q = Q[::]
-        self.D = D[::]
-        self.S = S[::]
-        self.F = F[::]
-        self.V = V[::]
+        self.estado_atual = self.estado_incial[0]
 
-    estado_atual = S
+        print(self.campos)
 
-    #def processar_palavra(self, palavra)
+
+
+
