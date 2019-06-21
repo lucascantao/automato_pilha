@@ -1,2 +1,2 @@
 # automato_pilha
-automato para criar automato scom pilha
+TODO instruções de com usar
