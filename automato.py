@@ -20,7 +20,7 @@ class Automato:
         gramatica = gramatica.replace(')', '')
         gramatica = gramatica.replace('{', '|')
         gramatica = gramatica.replace('}', '|')
-        gramatica = gramatica.split('|')  # CAMPOS RECEBE UMA LISTA DOS CONJUNTOS DA GRAMATICA
+        gramatica = gramatica.split('|')  # RECEBE UMA LISTA DOS CONJUNTOS DA GRAMATICA
 
         # RETIRANDO ELEMENTOS INUTEIS DA LISTA
         for i in gramatica:
