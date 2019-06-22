@@ -4,19 +4,29 @@ import os
 path = os.getcwd()              # PEGANDO CAMINHO ATUAL
 directory = os.listdir(path)    # LISTANDO TODOS OS ARQUIVOS
 
-arq = ""
+arq_list = []
 
-for fi in directory:            # DEFININDO ARQUIVO .TXT A SER LIDO
+arq: str
+
+for fi in directory:            # ADICIONANDO TODOS OS ARQUIVOS .txt PARA arq_list
     if fi.endswith('.txt'):
-        arq = fi
+        arq_list.append(fi)
 
-simbolos = []
-estados = []
-pilha = []
-estados_finais = []
-estado_inicial: ""
-estado_atual: ""
-regras_de_prod = []
+# O USUÁRIO DEVERÁ DIZER QUAL O ARQUIVO QUE ESTÁ O AUTÔMATO ATRAVÉS DE UM ÍNDICE NUMÉRICO
+while True:
+    print("\n", path, ":")
+    for i in range(len(arq_list)):
+        print("\t", i+1, "-", arq_list[i])
+
+    opc = int(input("\nIndique o arquivo a ser lido: "))
+
+    if 0 < opc < len(arq_list)+1:
+        arq = arq_list[opc-1]
+        print("\n")
+        break
+    else:
+        print("\nÍndice = %d inválido! Por favor, digite novamente." % opc)
+
 
 file = open(arq, 'r', encoding='utf-8')
 
