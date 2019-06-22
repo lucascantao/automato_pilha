@@ -1,12 +1,12 @@
-from automato import *
+import automato
 import os
 
-path = os.getcwd()              #PEGANDO CAMINHO ATUAL
-directory = os.listdir(path)    #LISTANDO TODOS OS ARQUIVOS
+path = os.getcwd()              # PEGANDO CAMINHO ATUAL
+directory = os.listdir(path)    # LISTANDO TODOS OS ARQUIVOS
 
 arq = ""
 
-for fi in directory:            #DEFININDO ARQUIVO .TXT A SER LIDO
+for fi in directory:            # DEFININDO ARQUIVO .TXT A SER LIDO
     if fi.endswith('.txt'):
         arq = fi
 
@@ -18,16 +18,15 @@ estado_inicial: ""
 estado_atual: ""
 regras_de_prod = []
 
-
 file = open(arq, 'r', encoding='utf-8')
 
 a = file.read()
 line = a.splitlines()
 
-gramatica = line[0]
+gramatica = line[0]   # PRIMEIRA LINHA DO ARQUIVO CONTENDO A GRAMATICA DO AUTOMATO
 regras_de_prod = line[1:]
 
-aut = Automato(gramatica)
+aut = automato.Automato(gramatica)  # PASSANDO A STRING DA PRIMEIRA LINHA DO ARQUIVO COMO PARÂMETRO
 
 print("SIMBOLOS: ", aut.simbolos)
 print('ESTADO INICIAL: ', aut.estado_incial)
