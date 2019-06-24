@@ -36,11 +36,22 @@ line = a.splitlines()
 gramatica = line[0]   # PRIMEIRA LINHA DO ARQUIVO CONTENDO A GRAMATICA DO AUTOMATO
 regras_de_prod = line[1:]
 
-aut = automato.Automato(gramatica)  # PASSANDO A STRING DA PRIMEIRA LINHA DO ARQUIVO COMO PARÂMETRO
+aut = automato.Automato(gramatica, regras_de_prod)  # PASSANDO A STRING DA PRIMEIRA LINHA DO ARQUIVO COMO PARÂMETRO
 
 print("SIMBOLOS: ", aut.simbolos)
 print('ESTADO INICIAL: ', aut.estado_incial)
 print('ESTADOS FINAIS: ', aut.estados_finais)
 print('ESTADOS: ', aut.estados)
-print('PILHA: ', aut.pilha)
+print('PILHA: ', aut.simbolos_pilha)
 print('ESTADO ATUAL: ', aut.estado_atual)
+
+print(regras_de_prod)
+
+for i in range(len(aut.modulos)):
+    print(i)
+
+aut.setprod(regras_de_prod)
+
+print(aut.modulos[0].estado_destino)
+
+
