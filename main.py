@@ -47,11 +47,6 @@ print('ESTADO ATUAL: ', aut.estado_atual)
 
 print(regras_de_prod)
 
-for i in range(len(aut.modulos)):
-    print(i)
+palavra = input("Digite a palavra:\n")
 
-aut.setprod(regras_de_prod)
-
-print(aut.modulos[0].estado_destino)
-
-
+aut.proc_pal(palavra)
