@@ -1,10 +1,7 @@
-import no
-
 
 class Automato:
 
-    first_intetaration = True
-
+    # first_intetaration = True
 
     # ESPECIFICAÇOES DO AUTOMATO
     simbolos = []
@@ -17,8 +14,6 @@ class Automato:
     PILHA= []
 
     regras_de_prod = []
-
-    modulos = []  # LISTA DE NOS DO AUTOMATO
 
     def __init__(self, gramatica: str, reg_de_prod: list):  # CONSTRUTOR DA CLASSSE RECEBENDO A GRAMATICA DO AUTOMATO (1° LINHA DO ARQUIVO)
 
@@ -50,10 +45,6 @@ class Automato:
         self.estado_atual = self.estado_incial[0]  # O ESTADO ATUAL SERÁ IGUAL AO ESTADO INICIAL
 
         print(gramatica)
-
-        for i in self.estados:  # CRIANDO OS NOS DO AUTOMATO DE ACORDO COM OS ESTADOS E ADICIONANDO À LISTA DE MODULOS
-            nos = no.No(i)   # PASSANDO O NOME DO NO PARA O CONSTRUOTR DA CLASSE
-            self.modulos.append(nos)
 
     def check_pilha_vazia(self):
         if self.PILHA == []:
