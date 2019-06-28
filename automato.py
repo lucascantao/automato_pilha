@@ -3,7 +3,7 @@ import no
 
 class Automato:
 
-    firt_it = True
+    first_intetaration = True
 
 
     # ESPECIFICAÇOES DO AUTOMATO
@@ -55,34 +55,94 @@ class Automato:
             nos = no.No(i)   # PASSANDO O NOME DO NO PARA O CONSTRUOTR DA CLASSE
             self.modulos.append(nos)
 
-    #def setprod(self, reg_de_prod: list): # DEFININDO AS REGRAS DE PRODUÇÃO
-
-     #   for line in reg_de_prod:
-      #      print("\nlendo linha:", line)
-       #     prod = line.split(', ')
-        #    print("split =", prod)
-         #   for i in self.modulos:
-#
- #               if i.estado_origem == prod[0]:
-  #                  i.setNo(prod[1], prod[2], prod[3], prod[4])
+    def check_pilha_vazia(self):
+        if self.PILHA == []:
+            return True
+        else:
+            return False
 
     def process(self, simbolo):
-        for line in self.regras_de_prod:
+
+        if simbolo not in self.simbolos:  # checa se o simbolo existe no alfabeto
+            print("Símbolo = '%s' não reconhecido" % simbolo)
+            return "error"
+
+        for line in self.regras_de_prod:  # checa qual estado ler o simbolo atual
             prod = line.split(', ')
 
             if self.estado_atual == prod[0] and simbolo == prod[1]:
 
-                self.estado_atual = prod[3] # atualizando estado atual
+                self.estado_atual = prod[3]  # atualizando estado atual
 
-                if self.firt_it: self.firt_it = False  # na primeira interação não a leitura de pilha
-                else: self.PILHA.remove(self.PILHA[-1])
+                # if self.first_intetaration:
+                #     self.first_intetaration = False  # na primeira interação não a leitura de pilha
+                # else:
 
-                if prod[4] == '-': pass
-                else: self.PILHA.append(prod[4])
+                if prod[2] in self.PILHA:
+                    self.PILHA.remove(self.PILHA[-1])
+                elif prod[2] == '-':
+                    pass
+                else:
+                    print("&( %s, %s, %s ) : ERRO!!!"%(prod[0], prod[1], prod[2]))
+                    print("Simbolo não exite na pilha: '%s'"%prod[2])
+                    return "error"
 
-    def procPal(self, palavra: str):
+                if prod[4] == '-':
+                    pass
+                else:
+                    self.PILHA.append(prod[4])
+
+                print("&( %s, %s, %s ) : (%s, %s) | " % (prod[0], prod[1], prod[2], prod[3], prod[4]), self.PILHA)
+
+                return "simbolo_lido"
+
+        for line in self.regras_de_prod:  # se o estado atual não ler o simbolo, ver se ele checa a pilha vazia
+            prod = line.split(', ')
+
+            if self.estado_atual == prod[0] and simbolo == '?':
+                vazia = self.check_pilha_vazia()
+                if vazia:
+                    self.estado_atual = prod[3]  # se vazia, atualiza o estado atual
+                    if self.estado_atual in self.estados_finais:  # se chegar ao estado final, aceita
+                        return "pilha_vazia"
+                    else:
+                        return "error"
+                else:
+                    print("Pilha não vazia")
+                    return "error"
+
+        return "error"
+
+    def proc_pal(self, palavra: str):
+        print("\n", palavra, "\n")
         for s in palavra:
-            self.process(s)
 
+            status = self.process(s)
 
+            if status == "error":
+                print("Palavra não aceita")
+                return
+
+            if status == "pilha_vazia":
+                print("palavra acaita")
+                return
+
+        for line in self.regras_de_prod:  # ver se ele checa a pilha vazia
+            prod = line.split(', ')
+
+            if self.estado_atual == prod[0] and prod[1] == '?':
+                vazia = self.check_pilha_vazia()
+                if vazia:
+                    self.estado_atual = prod[3]  # se vazia, atualiza o estado atual
+                    if self.estado_atual in self.estados_finais:  # se chegar ao estado final, aceita
+                        print("&( %s, %s, %s ) : (%s, %s) | " % (prod[0], prod[1], prod[2], prod[3], prod[4]),
+                              self.PILHA)
+                        print("palavra aceita")
+                        return
+                    else:
+                        print("palavra não aceita")
+                        return
+                else:
+                    print("Pilha não vazia")
+                    return "error"
 
