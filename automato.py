@@ -111,11 +111,11 @@ class Automato:
             status = self.process(s)
 
             if status == "error":
-                print("Palavra não aceita")
+                print("RECUSADA")
                 return
 
             if status == "pilha_vazia":
-                print("palavra acaita")
+                print("ACEITA")
                 return
 
         for line in self.regras_de_prod:  # ver se ele checa a pilha vazia
@@ -128,12 +128,13 @@ class Automato:
                     if self.estado_atual in self.estados_finais:  # se chegar ao estado final, aceita
                         print("&( %s, %s, %s ) : (%s, %s) | " % (prod[0], prod[1], prod[2], prod[3], prod[4]),
                               self.PILHA)
-                        print("palavra aceita")
+                        print("ACEITA")
                         return
                     else:
-                        print("palavra não aceita")
+                        print("RECUSADA")
                         return
                 else:
                     print("Pilha não vazia")
-                    return "error"
+                    return
 
+        print("RECUSADA")
