@@ -1,7 +1,7 @@
 
 class Automato:
 
-    # first_intetaration = True
+    mov_vazio: bool
 
     # ESPECIFICAÇOES DO AUTOMATO
     simbolos = []
@@ -14,6 +14,14 @@ class Automato:
     PILHA= []
 
     regras_de_prod = []
+
+    def check_automato_vazio(self, rdp: list):
+        for line in rdp:
+            prod = line.split(", ")
+            if (prod[1] and prod[2]) == '-':
+                self.mov_vazio = True
+
+        self.mov_vazio = False
 
     def __init__(self, gramatica: str, reg_de_prod: list):  # CONSTRUTOR DA CLASSSE RECEBENDO A GRAMATICA DO AUTOMATO (1° LINHA DO ARQUIVO)
 
@@ -52,11 +60,41 @@ class Automato:
         else:
             return False
 
-    def process(self, simbolo):
+    def process_vazio(self):
+        return
+
+    def processa_simbolo(self, simbolo, equilibrio: bool):
 
         if simbolo not in self.simbolos:  # checa se o simbolo existe no alfabeto
             print("Símbolo = '%s' não reconhecido" % simbolo)
             return "error"
+
+        if equilibrio:
+
+            for line in self.regras_de_prod:  # checa qual estado lê o vazio
+                prod = line.split(', ')
+
+                if self.estado_atual == prod[0] and prod[1] == '-':
+
+                    self.estado_atual = prod[3]  # atualizando estado atual
+
+                    if self.PILHA != [] and prod[2] == self.PILHA[-1]:
+                        self.PILHA.pop((len(self.PILHA))-1)
+                    elif prod[2] == '-':
+                        pass
+                    else:
+                        print("&( %s, %s, %s ) : ERRO!!!" % (prod[0], prod[1], prod[2]))
+                        print("Simbolo não exite na pilha: '%s'" % prod[2])
+                        return "error"
+
+                    if prod[4] == '-':
+                        pass
+                    else:
+                        self.PILHA.append(prod[4])
+
+                    print("&( %s, %s, %s ) : (%s, %s) | " % (prod[0], prod[1], prod[2], prod[3], prod[4]), self.PILHA)
+
+                    # return "simbolo_lido"
 
         for line in self.regras_de_prod:  # checa qual estado ler o simbolo atual
             prod = line.split(', ')
@@ -65,17 +103,13 @@ class Automato:
 
                 self.estado_atual = prod[3]  # atualizando estado atual
 
-                # if self.first_intetaration:
-                #     self.first_intetaration = False  # na primeira interação não a leitura de pilha
-                # else:
-
-                if prod[2] in self.PILHA:
-                    self.PILHA.remove(self.PILHA[-1])
+                if self.PILHA != [] and prod[2] in self.PILHA[-1]:
+                    self.PILHA.pop((len(self.PILHA))-1)
                 elif prod[2] == '-':
                     pass
                 else:
-                    print("&( %s, %s, %s ) : ERRO!!!"%(prod[0], prod[1], prod[2]))
-                    print("Simbolo não exite na pilha: '%s'"%prod[2])
+                    print("&( %s, %s, %s ) : ERRO!!!" % (prod[0], prod[1], prod[2]))
+                    print("Simbolo não exite na pilha: '%s'" % prod[2])
                     return "error"
 
                 if prod[4] == '-':
@@ -104,11 +138,27 @@ class Automato:
 
         return "error"
 
-    def proc_pal(self, palavra: str):
+    def processa_palavra(self, palavra: str):
+
+        contador_de_simbolos = 0
+        unidade = 1
+
+        equilibrio = False
+
         print("\n", palavra, "\n")
+
         for s in palavra:
 
-            status = self.process(s)
+            contador_de_simbolos += unidade
+
+            if contador_de_simbolos > int((len(palavra))/2):
+                equilibrio = True  # Se passou da metade da palavra...
+
+            status = self.processa_simbolo(s, equilibrio)
+
+            if equilibrio:
+                contador_de_simbolos, unidade = 0, 0
+                equilibrio = False
 
             if status == "error":
                 print("RECUSADA")
@@ -118,7 +168,12 @@ class Automato:
                 print("ACEITA")
                 return
 
-        for line in self.regras_de_prod:  # ver se ele checa a pilha vazia
+        else:
+
+            for s in palavra:
+                status = self.process_vazio()
+
+        for line in self.regras_de_prod:  # quando a palavra terminar, ver se o estado atual checa a pilha vazia
             prod = line.split(', ')
 
             if self.estado_atual == prod[0] and prod[1] == '?':
