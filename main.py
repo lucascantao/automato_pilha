@@ -14,7 +14,7 @@ for fi in directory:            # ADICIONANDO TODOS OS ARQUIVOS .txt PARA arq_li
 
 # O USUÁRIO DEVERÁ DIZER QUAL O ARQUIVO QUE ESTÁ O AUTÔMATO ATRAVÉS DE UM ÍNDICE NUMÉRICO
 while True:
-    print("\n", path, ":")
+    print("\n%s : \n"%path)
     for i in range(len(arq_list)):
         print("\t", i+1, "-", arq_list[i])
 
@@ -49,4 +49,4 @@ print(regras_de_prod)
 
 palavra = input("Digite a palavra:\n")
 
-aut.proc_pal(palavra)
+aut.processa_palavra(palavra)
