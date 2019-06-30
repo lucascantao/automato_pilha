@@ -140,9 +140,9 @@ class Automato:
 
     def processa_palavra(self, palavra: str):
 
+        # VARIÁVEIS DE CONTROLE
         contador_de_simbolos = 0
         unidade = 1
-
         equilibrio = False
 
         print("\n", palavra, "\n")
@@ -156,8 +156,8 @@ class Automato:
 
             status = self.processa_simbolo(s, equilibrio)
 
-            if equilibrio:
-                contador_de_simbolos, unidade = 0, 0
+            if equilibrio:  # Depois que o vazio é lido, a checagem não é mais necessária e "equilíbrio" volta para False.
+                contador_de_simbolos, unidade = 0, 0  # As variáveis de incremento são zeradas, assim "equilíbrio" não se torna mais True
                 equilibrio = False
 
             if status == "error":
