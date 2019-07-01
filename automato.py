@@ -115,7 +115,8 @@ class Automato:
                 if prod[4] == '-':
                     pass
                 else:
-                    self.PILHA.append(prod[4])
+                    for s in prod[4]:
+                        self.PILHA.append(s)
 
                 print("&( %s, %s, %s ) : (%s, %s) | " % (prod[0], prod[1], prod[2], prod[3], prod[4]), self.PILHA)
 
