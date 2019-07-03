@@ -1,7 +1,9 @@
 import automato
 import os
 
-path = os.getcwd()              # PEGANDO CAMINHO ATUAL
+print("\n-----------------------------------------------------------")
+
+path = os.getcwd() + "\\automatos"              # PEGANDO CAMINHO ATUAL + PASTA DOS AUTOMAOTOS
 directory = os.listdir(path)    # LISTANDO TODOS OS ARQUIVOS
 
 arq_list = []
@@ -14,7 +16,7 @@ for fi in directory:            # ADICIONANDO TODOS OS ARQUIVOS .txt PARA arq_li
 
 # O USUÁRIO DEVERÁ DIZER QUAL O ARQUIVO QUE ESTÁ O AUTÔMATO ATRAVÉS DE UM ÍNDICE NUMÉRICO
 while True:
-    print("\n%s : \n"%path)
+    print("%s : \n"%path)
     for i in range(len(arq_list)):
         print("\t", i+1, "-", arq_list[i])
 
