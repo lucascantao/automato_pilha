@@ -3,7 +3,12 @@ import os
 
 print("\n-----------------------------------------------------------")
 
-path = os.getcwd() + "\\automatos"              # PEGANDO CAMINHO ATUAL + PASTA DOS AUTOMAOTOS
+os_dir_section = ""
+
+if os.name == "posix": os_dir_section = "/"
+else: os_dir_section = "\\"
+
+path = os.getcwd() + os_dir_section + "automatos"              # PEGANDO CAMINHO ATUAL + PASTA DOS AUTOMAOTOS
 directory = os.listdir(path)    # LISTANDO TODOS OS ARQUIVOS
 
 arq_list = []
@@ -11,8 +16,7 @@ arq_list = []
 arq: str
 
 for fi in directory:            # ADICIONANDO TODOS OS ARQUIVOS .txt PARA arq_list
-    if fi.endswith('.txt'):
-        arq_list.append(fi)
+    arq_list.append(fi)
 
 # O USUÁRIO DEVERÁ DIZER QUAL O ARQUIVO QUE ESTÁ O AUTÔMATO ATRAVÉS DE UM ÍNDICE NUMÉRICO
 while True:
@@ -30,7 +34,7 @@ while True:
         print("\nÍndice = %d inválido! Por favor, digite novamente." % opc)
 
 
-file = open(arq, 'r', encoding='utf-8')
+file = open((path + os_dir_section + arq), 'r', encoding='utf-8')
 
 a = file.read()
 line = a.splitlines()
